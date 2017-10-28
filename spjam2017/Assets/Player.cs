@@ -59,10 +59,11 @@ public class Player : MonoBehaviour {
 
 		if (dragJoint) return; // Already has drag joint
 		
-		Debug.Log(GetPlayerPrefix() + " [release grab] Created joint");
-		
 		dragJoint = gameObject.AddComponent<FixedJoint>() as FixedJoint;
 		dragJoint.connectedBody = objectBeingDragged.GetComponent<Rigidbody>();
+		dragJoint.connectedBody.transform.Translate(Vector3.up * 0.1f);
+		
+		Debug.Log(GetPlayerPrefix() + " [release grab] Created joint: " + gameObject.GetHashCode());
 	}
 
 	private void OnTriggerStay(Collider other) {
@@ -76,7 +77,8 @@ public class Player : MonoBehaviour {
 		objectBeingDragged = null;
 
 		if (dragJoint) {
-			Debug.Log(GetPlayerPrefix() + " [release hold] Found joint, destroying");
+			Debug.Log(GetPlayerPrefix() + " [release hold] Found joint, destroying: " + gameObject.GetHashCode());
+			dragJoint.connectedBody.transform.Translate(Vector3.down * 0.1f);
 			Destroy(dragJoint);
 			dragJoint = null;
 		}

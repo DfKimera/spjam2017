@@ -7,13 +7,11 @@ public class DeliveryArea : MonoBehaviour {
 
 	public TeamID team = TeamID.Team1;
 	
-	private SphereCollider area;
 	private List<GameObject> objectsInArea;
 	private Dictionary<BlockID, int> objectCounter;
 	private MatchController match;
 	
 	protected void Start () {
-		area = GetComponent<SphereCollider>();
 		objectsInArea = new List<GameObject>();
 		objectCounter = new Dictionary<BlockID, int>();
 		
@@ -42,6 +40,7 @@ public class DeliveryArea : MonoBehaviour {
 		if (objectsInArea.Contains(other.gameObject)) return;
 
 		objectsInArea.Add(other.gameObject);
+		other.gameObject.GetComponent<Block>().isAttracting = true;
 
 		CheckIfScored();
 	}
@@ -52,6 +51,8 @@ public class DeliveryArea : MonoBehaviour {
 		
 		if (!other.gameObject.CompareTag("CanBeGrabbed")) return;
 		if (!objectsInArea.Contains(other.gameObject)) return;
+		
+		other.gameObject.GetComponent<Block>().isAttracting = false;
 
 		objectsInArea.Remove(other.gameObject);
 
