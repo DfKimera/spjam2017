@@ -59,8 +59,10 @@
     <Compile Include="Assets\JSON\JSONObject.cs" />
     <Compile Include="Assets\JSON\JSONTemplates.cs" />
     <Compile Include="Assets\JSON\VectorTemplates.cs" />
+    <Compile Include="Assets\MatchController.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\PlayerID.cs" />
+    <Compile Include="Assets\ScoreDisplay.cs" />
     <Compile Include="Assets\TeamID.cs" />
     <None Include="Assets\JSON\readme.txt" />
     <Reference Include="Facebook.Unity.Settings">

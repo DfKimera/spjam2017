@@ -10,11 +10,14 @@ public class DeliveryArea : MonoBehaviour {
 	private SphereCollider area;
 	private List<GameObject> objectsInArea;
 	private Dictionary<BlockID, int> objectCounter;
+	private MatchController match;
 	
 	protected void Start () {
 		area = GetComponent<SphereCollider>();
 		objectsInArea = new List<GameObject>();
 		objectCounter = new Dictionary<BlockID, int>();
+		
+		match = GameObject.FindGameObjectWithTag("GameController").GetComponent<MatchController>();
 		
 		Debug.Log("DeliveryArea initialized: " + GetTeamID());
 	}
@@ -56,6 +59,9 @@ public class DeliveryArea : MonoBehaviour {
 
 	private void CheckIfScored() {
 		objectCounter.Clear();
+
+		bool shouldDestroy = false;
+		BlockID destroyWithID = BlockID.A;
 		
 		objectsInArea.ForEach(o => {
 			BlockID id = o.GetComponent<Block>().id;
@@ -68,14 +74,31 @@ public class DeliveryArea : MonoBehaviour {
 
 			if (objectCounter[id] >= 3) {
 				Debug.Log(GetTeamID() + ": SCORE!");
+				match.AwardPoints(team, 10);
+
+				shouldDestroy = true;
+				destroyWithID = id;
 			}
 			
 		});
 
 
+		if (shouldDestroy) {
+			DestroyBlocksWithId(destroyWithID);
+		}
+
 		foreach (KeyValuePair<BlockID, int> kv in objectCounter) {
 			Debug.Log(GetTeamID() + ": Counter -> " + kv.Key + " : " + kv.Value);	
 		}
 		
+	}
+
+	private void DestroyBlocksWithId(BlockID id) {
+		objectsInArea.ForEach(o => {
+			if (!o.GetComponent<Block>().id.Equals(id)) return;
+			
+			Destroy(o);
+			objectsInArea.Remove(o);
+		});		
 	}
 }
