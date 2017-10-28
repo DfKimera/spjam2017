@@ -1,2 +1,5 @@
 spjam2017/Temp/*
 spjam2017/obj/*
+*.userprefs
+spjam2017/Library/metadata/*
+spjam2017/Library/ShaderCache/*
