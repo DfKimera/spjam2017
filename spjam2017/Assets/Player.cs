@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
 	public float inputY = 0;
 	public bool tryingToHold = false;
 	public bool tryingToAttack = false;
-	public float speed = 100.0f;
+	public float speed = 150.0f;
 	
 	protected void Start () {
 		body = GetComponent<Rigidbody>();
@@ -51,14 +51,6 @@ public class Player : MonoBehaviour {
 
 	private void HandleMovement() {
 		body.AddForce(new Vector3(inputX * speed, 0, -inputY * speed), ForceMode.Force);
-
-		if (tryingToHold) {
-			Console.WriteLine(GetPlayerPrefix() + ": Hold!");
-		}
-		
-		if (tryingToAttack) {
-			Console.WriteLine(GetPlayerPrefix() + ": Attack!");
-		}
 	}
 
 	private void HandleGrabbing() {
@@ -66,6 +58,8 @@ public class Player : MonoBehaviour {
 		if (!tryingToHold) return; // Not dragging
 
 		if (dragJoint) return; // Already has drag joint
+		
+		Debug.Log(GetPlayerPrefix() + " [release grab] Created joint");
 		
 		dragJoint = gameObject.AddComponent<FixedJoint>() as FixedJoint;
 		dragJoint.connectedBody = objectBeingDragged.GetComponent<Rigidbody>();
@@ -82,7 +76,7 @@ public class Player : MonoBehaviour {
 		objectBeingDragged = null;
 
 		if (dragJoint) {
-			Console.WriteLine("[release hold] Found joint, destroying");
+			Debug.Log(GetPlayerPrefix() + " [release hold] Found joint, destroying");
 			Destroy(dragJoint);
 			dragJoint = null;
 		}

@@ -54,12 +54,14 @@
   <ItemGroup>
     <Compile Include="Assets\Block.cs" />
     <Compile Include="Assets\BlockID.cs" />
+    <Compile Include="Assets\DeliveryArea.cs" />
     <Compile Include="Assets\DemoCubeController.cs" />
     <Compile Include="Assets\JSON\JSONObject.cs" />
     <Compile Include="Assets\JSON\JSONTemplates.cs" />
     <Compile Include="Assets\JSON\VectorTemplates.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\PlayerID.cs" />
+    <Compile Include="Assets\TeamID.cs" />
     <None Include="Assets\JSON\readme.txt" />
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>/Users/dfkimera/Projects/spjam2017/spjam2017/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>

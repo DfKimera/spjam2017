@@ -119,7 +119,7 @@ MonoBehaviour:
   inputY: 0
   tryingToHold: 0
   tryingToAttack: 0
-  speed: 100
+  speed: 150
 --- !u!135 &135579963221289284
 SphereCollider:
   m_ObjectHideFlags: 1
