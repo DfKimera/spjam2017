@@ -25,6 +25,11 @@ namespace Entities {
 		
 		}
 
+		public int GetBlockCount(BlockType type) {
+			if (!this.objectCounter.ContainsKey(type)) return 0;
+			return this.objectCounter[type];
+		}
+
 		private string GetTeamID() {
 			switch (team) {
 				case TeamID.TeamA: return "Team_1";
@@ -82,6 +87,8 @@ namespace Entities {
 
 					shouldDestroy = true;
 					destroyWithType = type;
+
+					objectCounter[type] = 0;
 				}
 			
 			});

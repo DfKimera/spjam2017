@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Assets\Controllers\LobbyPanelController.cs" />
     <Compile Include="Assets\Controllers\MatchController.cs" />
+    <Compile Include="Assets\Controllers\PlayerUIController.cs" />
     <Compile Include="Assets\Controllers\RandomBlockSpawner.cs" />
     <Compile Include="Assets\Controllers\UIController.cs" />
     <Compile Include="Assets\Deprecated\DemoCubeController.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\JSON\VectorTemplates.cs" />
     <Compile Include="Assets\Rendering\SpriteBillboardRenderer.cs" />
     <Compile Include="Assets\Structs\PlayerSettings.cs" />
+    <Compile Include="Assets\UI\BlockCountDisplay.cs" />
     <Compile Include="Assets\UI\ScoreDisplay.cs" />
     <Compile Include="Assets\UI\TeamNameRenderer.cs" />
     <None Include="Assets\JSON\readme.txt" />

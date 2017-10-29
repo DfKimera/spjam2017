@@ -21,9 +21,10 @@ namespace Entities {
 
 		public int attackCooldown = 0;
 		public int stunCooldown = 0;
-		
-		public int attackDelay = 100;
-		public int stunDelay = 100;
+
+		public float attackForce = 85.0f;
+		public int attackDelay = 200;
+		public int stunDelay = 150;
 
 		public string animationName = "player_idle";
 
@@ -115,10 +116,12 @@ namespace Entities {
 
 			animationName = "idle";
 
-			if (body.velocity.x > animationDeadzone) animationName = "walk_right";
-			if (body.velocity.x < -animationDeadzone) animationName = "walk_left";
-			if (body.velocity.z < -animationDeadzone && body.velocity.z < body.velocity.x) animationName = "walk_down";
-			if (body.velocity.z > animationDeadzone && body.velocity.z > body.velocity.x) animationName = "walk_up";
+			bool isAttacking = (attackCooldown > (attackDelay - 8));
+
+			if (body.velocity.x > animationDeadzone) animationName = ((isAttacking) ? "attack" : "walk") + "_right";
+			if (body.velocity.x < -animationDeadzone) animationName = ((isAttacking) ? "attack" : "walk") + "_left";
+			if (body.velocity.z < -animationDeadzone && body.velocity.z < body.velocity.x) animationName = ((isAttacking) ? "attack" : "walk") + "_down";
+			if (body.velocity.z > animationDeadzone && body.velocity.z > body.velocity.x) animationName = ((isAttacking) ? "attack" : "walk") + "_up";
 			if (isStunned) animationName = "stun";
 
 			animator.Play(GetPlayerPrefix() + "_" + animationName);
@@ -137,22 +140,24 @@ namespace Entities {
 			if (attackCooldown > 0) return;
 			
 			attackCooldown = attackDelay;
+			//particles.Emit(64);
 			
 			if (!targetPlayer) {
 				// TODO: emit 'ugh' sound
 				return;
 			}
 
-			targetPlayer.GetComponent<Player>().Stun();
+			targetPlayer.GetComponent<Player>().Stun(this);
 			
-
-			//particles.Emit(100);
 		}
 
-		public void Stun() {
+		public void Stun(Player attacker) {
 			Debug.Log(GetPlayerPrefix() + " -> STUNNED!");
+			
 			isStunned = true;
 			stunCooldown = stunDelay;
+			
+			body.AddForce((transform.position - attacker.transform.position).normalized * attackForce, ForceMode.Impulse);
 			
 			// TODO: emit 'ouch' sound
 		}
