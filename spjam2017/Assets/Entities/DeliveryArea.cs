@@ -63,6 +63,16 @@ namespace Entities {
 			objectsInArea.Remove(other.gameObject);
 
 		}
+		
+		public int GetNumPoints(BlockType type) {
+			switch (type) {
+				case BlockType.Crawfish: return 30;
+				case BlockType.Larvae: return 20;
+				case BlockType.Worm: return 10;
+			}
+
+			return 10;
+		}
 
 		private void CheckIfScored() {
 			objectCounter.Clear();
@@ -73,7 +83,7 @@ namespace Entities {
 			objectsInArea.ForEach(o => {
 				if (o == null || !o.activeSelf) return;
 				
-				BlockType type = o.GetComponent<Block>().Type;
+				BlockType type = o.GetComponent<Block>().type;
 			
 				if (!objectCounter.ContainsKey(type)) {
 					objectCounter[type] = 0;
@@ -83,7 +93,7 @@ namespace Entities {
 
 				if (objectCounter[type] >= 3) {
 					Debug.Log(GetTeamID() + ": SCORE!");
-					match.AwardPoints(team, 10);
+					match.AwardPoints(team, GetNumPoints(type));
 
 					shouldDestroy = true;
 					destroyWithType = type;
@@ -110,7 +120,7 @@ namespace Entities {
 		
 			objectsInArea.ForEach(o => {
 				if (o == null || !o.activeSelf) return;
-				if (!o.GetComponent<Block>().Type.Equals(type)) return;
+				if (!o.GetComponent<Block>().type.Equals(type)) return;
 			
 				objectsToDestroy.Add(o);
 			});

@@ -19,7 +19,7 @@ namespace Controllers {
 		}
 
 		private void CheckPanelVisibility() {
-			gameHUD.SetActive(match.hasMatchStarted);
+			gameHUD.SetActive(match.hasMatchStarted || match.hasGameOver);
 			matchTypePanel.SetActive(!match.hasMatchStarted && !match.hasGameOver && !match.hasSelectedMatchType);
 			lobbyPanel.SetActive(!match.hasMatchStarted && !match.hasGameOver && match.hasSelectedMatchType);
 			gameOverPanel.SetActive(match.hasGameOver);

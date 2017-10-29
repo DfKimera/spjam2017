@@ -21,7 +21,7 @@ namespace Controllers {
 	
 		public float minBlockDistance = 0.4f;
 		public float initialSpawnDelay = 5.0f;
-		public float spawnInterval = 5.0f;
+		public float spawnInterval = 4.0f;
 	
 		protected void Start () {
 
@@ -67,8 +67,8 @@ namespace Controllers {
 		private BlockType GenerateRandomBlockID() {
 			int random = (int) (Random.value * 100);
 
-			if (random > 45) return BlockType.Worm;
-			if (random < 80) return BlockType.Larvae;
+			if (random < 45) return BlockType.Worm;
+			if (random < 85) return BlockType.Larvae;
 
 			return BlockType.Crawfish;
 		}
@@ -86,7 +86,7 @@ namespace Controllers {
 		private void SpawnBlock(BlockType type, Vector3 position) {
 			GameObject obj = Instantiate<GameObject>(blockPrefab, position, Quaternion.identity);
 			obj.transform.parent = gameObject.transform;
-			obj.GetComponent<Block>().Type = type;
+			obj.GetComponent<Block>().type = type;
 		}
 	}
 }

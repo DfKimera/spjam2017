@@ -413,7 +413,7 @@ MonoBehaviour:
   player2: {fileID: 1371436362}
   player3: {fileID: 1960535913}
   player4: {fileID: 46297453}
-  scoreToVictory: 20
+  scoreToVictory: 60
   player1StartingPos: {x: -2, y: 0.1, z: 0.5}
   player2StartingPos: {x: 2, y: 0.1, z: 0.5}
   player3StartingPos: {x: -2, y: 0.1, z: -1.5}
@@ -4179,7 +4179,7 @@ MonoBehaviour:
   initialBlockHeight: 0.6
   minBlockDistance: 0.4
   initialSpawnDelay: 5
-  spawnInterval: 5
+  spawnInterval: 4
 --- !u!1 &2081191395
 GameObject:
   m_ObjectHideFlags: 0

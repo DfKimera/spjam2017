@@ -18,7 +18,7 @@ namespace Controllers {
 		public GameObject player3;
 		public GameObject player4;
 
-		public int scoreToVictory = 20;
+		public int scoreToVictory = 60;
 		
 		public Vector3 player1StartingPos = new Vector3(-2.0f, 0.3f, 0.5f);
 		public Vector3 player2StartingPos = new Vector3(2.0f, 0.3f, 0.5f);
