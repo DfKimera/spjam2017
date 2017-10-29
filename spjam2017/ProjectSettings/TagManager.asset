@@ -8,6 +8,7 @@ TagManager:
   - CanBeStunned
   - BlockSpawner
   - UIEventSystem
+  - AudioController
   layers:
   - Default
   - TransparentFX

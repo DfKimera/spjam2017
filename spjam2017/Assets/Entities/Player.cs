@@ -35,6 +35,15 @@ namespace Entities {
 		public bool isStunned = false;
 		public float speed = 150.0f;
 		public float animationDeadzone = 0.05f;
+
+		public int footstepsCooldown = 0;
+		public int footstepsDelay = 8;
+
+		public AudioClip[] sfxFootsteps;
+		public AudioClip sfxAttack;
+		public AudioClip sfxStunned;
+		public AudioClip sfxPickBlock;
+		public AudioClip sfxDropBlock;
 	
 		protected void Start () {
 			body = GetComponent<Rigidbody>();
@@ -54,6 +63,7 @@ namespace Entities {
 			
 			HandleStun();
 			HandleMovement();
+			HandleFootsteps();
 			HandleGrabbing();
 			HandleAnimations();
 			
@@ -112,6 +122,25 @@ namespace Entities {
 			}
 		}
 
+		private void HandleFootsteps() {
+			if (body.velocity.x > animationDeadzone 
+			    || body.velocity.x < -animationDeadzone 
+			    || body.velocity.z > animationDeadzone 
+			    || body.velocity.z < -animationDeadzone) {
+				footstepsCooldown--;
+			}
+
+			bool isTryingToMove = inputX != 0 || inputY != 0;
+
+			if (isTryingToMove && footstepsCooldown <= 0) {
+				AudioClip footstepClip = sfxFootsteps[Random.Range(0, sfxFootsteps.Length - 1)];
+				
+				PlaySFX(footstepClip, 0.3f);
+				
+				footstepsCooldown = footstepsDelay;
+			}
+		}
+
 		private void HandleAnimations() {
 
 			animationName = "idle";
@@ -135,18 +164,20 @@ namespace Entities {
 
 			if (stunCooldown == 0) isStunned = false;
 		}
+
+		public void PlaySFX(AudioClip clip, float volume = 1.0f) {
+			AudioSource.PlayClipAtPoint(clip, transform.position, volume);
+		}
 		
 		public void Attack() {
 
 			if (attackCooldown > 0) return;
 			
 			attackCooldown = attackDelay;
-			//particles.Emit(64);
+
+			PlaySFX(sfxAttack);
 			
-			if (!targetPlayer) {
-				// TODO: emit 'ugh' sound
-				return;
-			}
+			if (!targetPlayer) return;
 
 			targetPlayer.GetComponent<Player>().Stun(this);
 			
@@ -160,7 +191,7 @@ namespace Entities {
 			
 			body.AddForce((transform.position - attacker.transform.position).normalized * attackForce, ForceMode.Impulse);
 			
-			// TODO: emit 'ouch' sound
+			PlaySFX(sfxStunned);
 		}
 		
 	
@@ -168,6 +199,8 @@ namespace Entities {
 			dragJoint = gameObject.AddComponent<FixedJoint>() as FixedJoint;
 			dragJoint.connectedBody = objectBeingDragged.GetComponent<Rigidbody>();
 			dragJoint.connectedBody.transform.Translate(Vector3.up * 0.1f);
+			
+			PlaySFX(sfxPickBlock);
 		
 			Debug.Log(GetPlayerPrefix() + " [release grab] Created joint: " + gameObject.GetHashCode());
 		}
@@ -181,6 +214,8 @@ namespace Entities {
 			if (dragJoint.connectedBody != null) {
 				dragJoint.connectedBody.transform.Translate(Vector3.down * 0.1f);
 			}
+			
+			PlaySFX(sfxDropBlock);
 	
 			Destroy(dragJoint);
 			dragJoint = null;

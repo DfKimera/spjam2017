@@ -11,6 +11,9 @@ namespace Entities {
 		private List<GameObject> objectsInArea;
 		private Dictionary<BlockType, int> objectCounter;
 		private MatchController match;
+
+		public AudioClip sfxEnter;
+		public AudioClip sfxLeave;
 	
 		protected void Start () {
 			objectsInArea = new List<GameObject>();
@@ -45,6 +48,8 @@ namespace Entities {
 			if (!other.gameObject.CompareTag("CanBeGrabbed")) return;
 			if (objectsInArea.Contains(other.gameObject)) return;
 
+			AudioSource.PlayClipAtPoint(sfxEnter, transform.position);
+			
 			objectsInArea.Add(other.gameObject);
 			other.gameObject.GetComponent<Block>().isAttracting = true;
 
@@ -59,8 +64,12 @@ namespace Entities {
 			if (!objectsInArea.Contains(other.gameObject)) return;
 		
 			other.gameObject.GetComponent<Block>().isAttracting = false;
+			
+			AudioSource.PlayClipAtPoint(sfxLeave, transform.position);
 
 			objectsInArea.Remove(other.gameObject);
+
+			CheckIfScored();
 
 		}
 		

@@ -447,6 +447,17 @@ MonoBehaviour:
   isStunned: 0
   speed: 300
   animationDeadzone: 0.08
+  footstepsCooldown: 0
+  footstepsDelay: 8
+  sfxFootsteps:
+  - {fileID: 8300000, guid: 3dd8f033e80eb4a2e91f931e3409e7c1, type: 3}
+  - {fileID: 8300000, guid: 8a5350f5a9ebb45b9b34fe968b13611c, type: 3}
+  - {fileID: 8300000, guid: c62d566ce87f3475681f8ac224eb7b53, type: 3}
+  - {fileID: 8300000, guid: c53d3a8c077774284b823ba9fc1857f4, type: 3}
+  sfxAttack: {fileID: 8300000, guid: de5624906aa934d0dbce06c7721e4545, type: 3}
+  sfxStunned: {fileID: 8300000, guid: ad9f4deb602464f719ddc192311bdeb7, type: 3}
+  sfxPickBlock: {fileID: 8300000, guid: 5c258a740e95a4723be316f65b3f4f24, type: 3}
+  sfxDropBlock: {fileID: 8300000, guid: c7b50372f2c234a47be8068e26facaa1, type: 3}
 --- !u!114 &114834026964458392
 MonoBehaviour:
   m_ObjectHideFlags: 1

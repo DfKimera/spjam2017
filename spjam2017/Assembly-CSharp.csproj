@@ -52,10 +52,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Controllers\CreditsController.cs" />
     <Compile Include="Assets\Controllers\LobbyPanelController.cs" />
     <Compile Include="Assets\Controllers\MatchController.cs" />
     <Compile Include="Assets\Controllers\PlayerUIController.cs" />
     <Compile Include="Assets\Controllers\RandomBlockSpawner.cs" />
+    <Compile Include="Assets\Controllers\TitleScreenController.cs" />
     <Compile Include="Assets\Controllers\UIController.cs" />
     <Compile Include="Assets\Deprecated\DemoCubeController.cs" />
     <Compile Include="Assets\Entities\Block.cs" />

@@ -10,6 +10,7 @@ namespace Controllers {
 		public bool hasMatchStarted = false;
 		public bool hasSelectedMatchType = false;
 		public bool hasGameOver = false;
+		public bool showCredits = false;
 
 		public TeamID winningTeam;
 		public MatchType matchType = MatchType.TwoPlayers;
@@ -31,14 +32,19 @@ namespace Controllers {
 	
 		private RandomBlockSpawner spawner;
 		private EventSystem uiEvents;
-	
-	
+		
+		public UIController uiController;
+
+		public AudioClip sfxScore;
+		public AudioClip sfxVictory;
+
 		protected void Start () {
 			ResetScore();
 
 			ResetPlayerSettings();
 			ResetPlayerPositions();
 
+			uiController = GameObject.Find("UI").GetComponent<UIController>();
 			spawner = GameObject.FindGameObjectWithTag("BlockSpawner").GetComponent<RandomBlockSpawner>();
 			uiEvents = GameObject.FindWithTag("UIEventSystem").GetComponent<EventSystem>();
 			
@@ -99,6 +105,8 @@ namespace Controllers {
 			if (!score.ContainsKey(team)) return;
 			
 			score[team] += numPoints;
+			
+			AudioSource.PlayClipAtPoint(sfxScore, Camera.main.transform.position);
 		
 			CheckIfGameOver();
 		}
@@ -123,6 +131,8 @@ namespace Controllers {
 
 		private void HandleGameOver(TeamID whoWon) {
 			winningTeam = whoWon;
+			
+			AudioSource.PlayClipAtPoint(sfxVictory, Camera.main.transform.position);
 		
 			hasGameOver = true;
 			hasMatchStarted = false;
@@ -139,12 +149,20 @@ namespace Controllers {
 			}
 		}
 
-		private void ShowTitleScreen() {
+		public void ShowTitleScreen() {
 			hasGameOver = false;
 			hasMatchStarted = false;
 			hasSelectedMatchType = false;
-			
-			uiEvents.SetSelectedGameObject(GameObject.Find("BtnTwoPlayers"));
+			showCredits = false;
+
+			uiController.ResetTitleScreenButtons();
+		}
+
+		public void ShowCredits() {
+			hasGameOver = false;
+			showCredits = true;
+			hasMatchStarted = false;
+			hasSelectedMatchType = false;
 		}
 
 		public void Select2v2() {

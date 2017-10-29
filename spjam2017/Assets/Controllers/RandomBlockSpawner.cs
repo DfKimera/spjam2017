@@ -7,6 +7,7 @@ namespace Controllers {
 	public class RandomBlockSpawner : MonoBehaviour {
 
 		public GameObject blockPrefab;
+		public MatchController match;
 	
 		public int numBlocksToStartWith = 8;
 		public int maxSpawnedObjects = 32;
@@ -22,9 +23,12 @@ namespace Controllers {
 		public float minBlockDistance = 0.4f;
 		public float initialSpawnDelay = 5.0f;
 		public float spawnInterval = 4.0f;
+		
+		public float spawnIntervalFourPlayers = 2.3f;
+		public float spawnIntervalTwoPlayers = 4.0f;
 	
 		protected void Start () {
-
+			match = GameObject.FindWithTag("GameController").GetComponent<MatchController>();
 		}
 	
 		protected void Update () {
@@ -38,6 +42,7 @@ namespace Controllers {
 		}
 
 		public void StartSpawnTimer() {
+			spawnInterval = match.matchType == MatchType.FourPlayers ? spawnIntervalFourPlayers : spawnIntervalTwoPlayers;
 			InvokeRepeating("SpawnRandomBlock", initialSpawnDelay, spawnInterval);
 		}
 
