@@ -482,7 +482,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4269330119036920, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4269330119036920, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
       propertyPath: m_LocalPosition.z
@@ -666,6 +666,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 3139bde3b67ea4687bb5e438b309de71, type: 2}
+    - target: {fileID: 4269330119036920, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
   m_IsPrefabParent: 0
@@ -744,7 +748,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4269330119036920, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4269330119036920, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
       propertyPath: m_LocalPosition.z
@@ -790,7 +794,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4269330119036920, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4269330119036920, guid: e0b21abb5069745f39b0859866b2f882, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1147,6 +1151,7 @@ GameObject:
   - component: {fileID: 1407752684}
   - component: {fileID: 1407752683}
   - component: {fileID: 1407752682}
+  - component: {fileID: 1407752685}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -1228,6 +1233,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!65 &1407752685
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1407752681}
+  m_Material: {fileID: 13400000, guid: 3f999f8e9ad77429d802da08aa9256f9, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 40, y: 20.000004, z: 0.20000005}
+  m_Center: {x: 20, y: -10.000002, z: 0.1}
 --- !u!1 &1445699239
 GameObject:
   m_ObjectHideFlags: 0

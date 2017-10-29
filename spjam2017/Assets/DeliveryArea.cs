@@ -8,12 +8,12 @@ public class DeliveryArea : MonoBehaviour {
 	public TeamID team = TeamID.Team1;
 	
 	private List<GameObject> objectsInArea;
-	private Dictionary<BlockID, int> objectCounter;
+	private Dictionary<BlockType, int> objectCounter;
 	private MatchController match;
 	
 	protected void Start () {
 		objectsInArea = new List<GameObject>();
-		objectCounter = new Dictionary<BlockID, int>();
+		objectCounter = new Dictionary<BlockType, int>();
 		
 		match = GameObject.FindGameObjectWithTag("GameController").GetComponent<MatchController>();
 		
@@ -62,44 +62,44 @@ public class DeliveryArea : MonoBehaviour {
 		objectCounter.Clear();
 
 		bool shouldDestroy = false;
-		BlockID destroyWithID = BlockID.A;
+		BlockType destroyWithType = BlockType.Crawfish;
 		
 		objectsInArea.ForEach(o => {
-			BlockID id = o.GetComponent<Block>().id;
+			BlockType type = o.GetComponent<Block>().Type;
 			
-			if (!objectCounter.ContainsKey(id)) {
-				objectCounter[id] = 0;
+			if (!objectCounter.ContainsKey(type)) {
+				objectCounter[type] = 0;
 			}
 
-			objectCounter[id]++;
+			objectCounter[type]++;
 
-			if (objectCounter[id] >= 3) {
+			if (objectCounter[type] >= 3) {
 				Debug.Log(GetTeamID() + ": SCORE!");
 				match.AwardPoints(team, 10);
 
 				shouldDestroy = true;
-				destroyWithID = id;
+				destroyWithType = type;
 			}
 			
 		});
 
 
 		if (shouldDestroy) {
-			DestroyBlocksWithId(destroyWithID);
+			DestroyBlocksWithId(destroyWithType);
 		}
 
-		foreach (KeyValuePair<BlockID, int> kv in objectCounter) {
+		foreach (KeyValuePair<BlockType, int> kv in objectCounter) {
 			Debug.Log(GetTeamID() + ": Counter -> " + kv.Key + " : " + kv.Value);	
 		}
 		
 	}
 
-	private void DestroyBlocksWithId(BlockID id) {
+	private void DestroyBlocksWithId(BlockType type) {
 		
 		List<GameObject> objectsToDestroy = new List<GameObject>(); 
 		
 		objectsInArea.ForEach(o => {
-			if (!o.GetComponent<Block>().id.Equals(id)) return;
+			if (!o.GetComponent<Block>().Type.Equals(type)) return;
 			
 			objectsToDestroy.Add(o);
 		});

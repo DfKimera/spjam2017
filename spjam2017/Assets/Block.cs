@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour {
 
-	public BlockID id = BlockID.A;
+	public BlockType Type = BlockType.Crawfish;
 	public bool isAttracting = false;
 
 	public int attractRange = 2;
@@ -19,14 +19,14 @@ public class Block : MonoBehaviour {
 
 		string materialName = "block_a";
 		
-		switch (id) {
-			case BlockID.A: materialName = "block_a"; break;
-			case BlockID.B: materialName = "block_b"; break;
-			case BlockID.C: materialName = "block_c"; break;
+		switch (Type) {
+			case BlockType.Crawfish: materialName = "crawfish_block"; break;
+			case BlockType.Larvae: materialName = "larvae_block"; break;
+			case BlockType.Worm: materialName = "worm_block"; break;
 					
 		}
 
-		mesh.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/" + materialName + ".mat");
+		mesh.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/Blocks/" + materialName + ".mat");
 	}
 	
 	protected void Update () {
@@ -42,7 +42,7 @@ public class Block : MonoBehaviour {
 			Block block = c.GetComponent<Block>();
 
 			if (block == null) continue;
-			if (block.id != id) continue;
+			if (block.Type != Type) continue;
 			if (!block.isAttracting) continue;
 			
 			Vector3 forceDirection = transform.position - c.transform.position;
