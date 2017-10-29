@@ -26,6 +26,7 @@ namespace Entities {
 		public bool isStunned = false;
 		public float speed = 150.0f;
 		public float animationDeadzone = 0.05f;
+        public bool inputOn = false;
 	
 		protected void Start () {
 			body = GetComponent<Rigidbody>();
@@ -35,8 +36,7 @@ namespace Entities {
 	
 		protected void Update () {
 			if (!IsActive()) return;
-		
-			CheckInputs();
+		    if(inputOn) CheckInputs();
 			HandleMovement();
 			HandleGrabbing();
 			HandleAnimations();

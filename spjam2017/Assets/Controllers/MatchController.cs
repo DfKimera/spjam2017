@@ -24,7 +24,9 @@ namespace Controllers {
 		public Vector3 player2StartingPos = new Vector3(2.0f, 0.1f, 0.5f);
 		public Vector3 player3StartingPos = new Vector3(-2.0f, 0.1f, -1.5f);
 		public Vector3 player4StartingPos = new Vector3(2.0f, 0.1f, -1.5f);
-	
+
+        public LandingText landingRender;
+
 		private Dictionary<TeamID, int> score = new Dictionary<TeamID, int>();
 		private Dictionary<PlayerID, PlayerSettings> players = new Dictionary<PlayerID, PlayerSettings>();
 	
