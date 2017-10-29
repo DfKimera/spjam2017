@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entities;
 using Identifiers;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +16,10 @@ namespace UI {
 		public int iconSize = 80;
 		public List<GameObject> icons = new List<GameObject>();
 		public Dictionary<BlockType, int> count = new Dictionary<BlockType, int>();
+		
+		public Sprite iconCrawfish;
+		public Sprite iconLarvae;
+		public Sprite iconWorm;
 		
 		protected void Start () {
 			count[BlockType.Crawfish] = 0;
@@ -75,18 +78,18 @@ namespace UI {
 			GameObject obj = Instantiate(iconPrefab, transform);
 			obj.GetComponent<RectTransform>().localPosition = new Vector3(x, y, 0);
 			//obj.GetComponent<RectTransform>().anchoredPosition.Set(x, y);
-			obj.GetComponent<Image>().sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Blocks/" + GetSpritePathByBlock(type));
+			obj.GetComponent<Image>().sprite = GetSpriteByBlock(type);
 			icons.Add(obj);
 		}
 
-		private string GetSpritePathByBlock(BlockType type) {
+		private Sprite GetSpriteByBlock(BlockType type) {
 			switch (type) {
-				case BlockType.Crawfish: return "crawfish_symbol.png";
-				case BlockType.Larvae: return "larvae_symbol.png";
-				case BlockType.Worm: return "worm_symbol.png";
+				case BlockType.Crawfish: return iconCrawfish;
+				case BlockType.Larvae: return iconLarvae;
+				case BlockType.Worm: return iconWorm;
 			}
 
-			return "crawfish_symbol.png";
+			return iconWorm;
 		}
 	}
 }

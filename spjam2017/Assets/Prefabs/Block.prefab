@@ -123,7 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5606291cb4a4ae1acec3d7c573527d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  type: 0
   isAttracting: 0
   attractRange: 3
   attractForce: 100
+  materialCrawfish: {fileID: 2100000, guid: 476bdee85d4184500bf594873f4874ab, type: 2}
+  materialLarvae: {fileID: 2100000, guid: 555a46cbfa0454d25adcacf4d7dd9575, type: 2}
+  materialWorm: {fileID: 2100000, guid: f1dfa3bb49ee444fb816c75cc4fc2a83, type: 2}

@@ -1,5 +1,4 @@
 ﻿using Identifiers;
-using UnityEditor;
 using UnityEngine;
 
 namespace Entities {
@@ -14,21 +13,21 @@ namespace Entities {
 		private MeshRenderer mesh;
 		private Rigidbody body;
 
+		public Material materialCrawfish;
+		public Material materialLarvae;
+		public Material materialWorm;
+
 		protected void Start () {
 			mesh = GetComponent<MeshRenderer>();
 			body = GetComponent<Rigidbody>();
-
-			string materialName = "block_a";
 		
 			switch (type) {
-				case BlockType.Crawfish: materialName = "crawfish_block"; break;
-				case BlockType.Larvae: materialName = "larvae_block"; break;
-				case BlockType.Worm: materialName = "worm_block"; break;
-					
+				case BlockType.Crawfish: mesh.material = materialCrawfish; break;
+				case BlockType.Larvae: mesh.material = materialLarvae; break;
+				case BlockType.Worm: mesh.material = materialWorm; break;
 			}
 
 			body.mass = GetBlockMass();
-			mesh.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/Blocks/" + materialName + ".mat");
 		}
 	
 		protected void Update () {
