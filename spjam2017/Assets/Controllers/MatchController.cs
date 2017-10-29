@@ -32,6 +32,7 @@ namespace Controllers {
 	
 		private RandomBlockSpawner spawner;
 		private EventSystem uiEvents;
+		private BGMController bgm;
 		
 		public UIController uiController;
 
@@ -47,6 +48,7 @@ namespace Controllers {
 			uiController = GameObject.Find("UI").GetComponent<UIController>();
 			spawner = GameObject.FindGameObjectWithTag("BlockSpawner").GetComponent<RandomBlockSpawner>();
 			uiEvents = GameObject.FindWithTag("UIEventSystem").GetComponent<EventSystem>();
+			bgm = GameObject.Find("BackgroundMusic").GetComponent<BGMController>();
 			
 			ShowTitleScreen();
 		}
@@ -94,6 +96,8 @@ namespace Controllers {
 		
 			hasMatchStarted = true;
 			hasSelectedMatchType = false;
+			
+			bgm.PlayMatchSong();
 		}
 
 		public int GetScore(TeamID team) {
@@ -154,6 +158,8 @@ namespace Controllers {
 			hasMatchStarted = false;
 			hasSelectedMatchType = false;
 			showCredits = false;
+			
+			bgm.PlayTitleSong();
 
 			uiController.ResetTitleScreenButtons();
 		}
