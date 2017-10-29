@@ -125,5 +125,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   isAttracting: 0
-  attractRange: 2
-  attractForce: 40
+  attractRange: 3
+  attractForce: 100

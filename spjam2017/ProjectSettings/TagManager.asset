@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CanBeGrabbed
   - CanBeStunned
+  - BlockSpawner
   layers:
   - Default
   - TransparentFX
