@@ -8,34 +8,40 @@ public class Player : MonoBehaviour {
 
 	private Rigidbody body;
 	private SphereCollider radius;
+	private Animator animator;
 
 	public GameObject objectBeingDragged = null;
 	public FixedJoint dragJoint = null;
 	
-	public PlayerID id;
+	public PlayerID id = PlayerID.yellow;
+	public string animationName = "player_idle";
 
 	public float inputX = 0;
 	public float inputY = 0;
 	public bool tryingToHold = false;
 	public bool tryingToAttack = false;
+	public bool isStunned = false;
 	public float speed = 150.0f;
+	public float animationDeadzone = 0.05f;
 	
 	protected void Start () {
 		body = GetComponent<Rigidbody>();
+		animator = GetComponentInChildren<Animator>();
 	}
 	
 	protected void Update () {
 		CheckInputs();
 		HandleMovement();
 		HandleGrabbing();
+		HandleAnimations();
 	}
 	
 	private string GetPlayerPrefix() {
 		switch (id) {
-			default: case PlayerID.Player1: return "P1";
-			case PlayerID.Player2: return "P2";
-			case PlayerID.Player3: return "P3";
-			case PlayerID.Player4: return "P4";
+			default: case PlayerID.yellow: return "yellow";
+			case PlayerID.red: return "red";
+			case PlayerID.pink: return "pink";
+			case PlayerID.orange: return "orange";
 		}
 	}
 
@@ -54,16 +60,52 @@ public class Player : MonoBehaviour {
 	}
 
 	private void HandleGrabbing() {
-		if (!objectBeingDragged) return; // No objects in radius
-		if (!tryingToHold) return; // Not dragging
+		if (!objectBeingDragged) return;
 
-		if (dragJoint) return; // Already has drag joint
+		if (tryingToHold && !dragJoint) {
+			GrabBlock(objectBeingDragged);
+		}
 		
+		if (!tryingToHold && dragJoint) {
+			ReleaseBlock();
+		}
+	}
+
+	private void HandleAnimations() {
+
+		animationName = "idle";
+
+		if (body.velocity.x > animationDeadzone) animationName = "walk_right";
+		if (body.velocity.x < -animationDeadzone) animationName = "walk_left";
+		if (body.velocity.z < -animationDeadzone && body.velocity.z < body.velocity.x) animationName = "walk_down";
+		if (body.velocity.z > animationDeadzone && body.velocity.z > body.velocity.x) animationName = "walk_up";
+		if (isStunned) animationName = "stun";
+
+		animator.Play(GetPlayerPrefix() + "_" + animationName);
+
+	}
+	
+	private void GrabBlock(GameObject obj) {
 		dragJoint = gameObject.AddComponent<FixedJoint>() as FixedJoint;
 		dragJoint.connectedBody = objectBeingDragged.GetComponent<Rigidbody>();
 		dragJoint.connectedBody.transform.Translate(Vector3.up * 0.1f);
 		
 		Debug.Log(GetPlayerPrefix() + " [release grab] Created joint: " + gameObject.GetHashCode());
+	}
+
+	private void ReleaseBlock() {
+		
+		Debug.Log(GetPlayerPrefix() + " [release hold] Found joint, destroying: " + gameObject.GetHashCode());
+
+		if (dragJoint == null) return;
+		
+		if (dragJoint.connectedBody != null) {
+			dragJoint.connectedBody.transform.Translate(Vector3.down * 0.1f);
+		}
+	
+		Destroy(dragJoint);
+		dragJoint = null;
+		
 	}
 
 	private void OnTriggerStay(Collider other) {
@@ -75,12 +117,5 @@ public class Player : MonoBehaviour {
 		}
 		
 		objectBeingDragged = null;
-
-		if (dragJoint) {
-			Debug.Log(GetPlayerPrefix() + " [release hold] Found joint, destroying: " + gameObject.GetHashCode());
-			dragJoint.connectedBody.transform.Translate(Vector3.down * 0.1f);
-			Destroy(dragJoint);
-			dragJoint = null;
-		}
 	}
 }

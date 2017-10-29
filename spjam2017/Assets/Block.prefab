@@ -126,4 +126,4 @@ MonoBehaviour:
   id: 0
   isAttracting: 0
   attractRange: 2
-  attractForce: 25
+  attractForce: 40

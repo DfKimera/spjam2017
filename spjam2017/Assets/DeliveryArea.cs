@@ -95,11 +95,20 @@ public class DeliveryArea : MonoBehaviour {
 	}
 
 	private void DestroyBlocksWithId(BlockID id) {
+		
+		List<GameObject> objectsToDestroy = new List<GameObject>(); 
+		
 		objectsInArea.ForEach(o => {
 			if (!o.GetComponent<Block>().id.Equals(id)) return;
 			
+			objectsToDestroy.Add(o);
+		});
+		
+		objectsToDestroy.ForEach(o => {
 			Destroy(o);
 			objectsInArea.Remove(o);
-		});		
+		});
+		
+		objectsToDestroy.Clear();
 	}
 }

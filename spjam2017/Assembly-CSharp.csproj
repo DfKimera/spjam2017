@@ -62,7 +62,11 @@
     <Compile Include="Assets\MatchController.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\PlayerID.cs" />
+    <Compile Include="Assets\RandomBlockSpawner.cs" />
     <Compile Include="Assets\ScoreDisplay.cs" />
+    <Compile Include="Assets\SpriteBillboardRenderer.cs" />
+    <Compile Include="Assets\SpriteDirection.cs" />
+    <Compile Include="Assets\SpriteSequence.cs" />
     <Compile Include="Assets\TeamID.cs" />
     <None Include="Assets\JSON\readme.txt" />
     <Reference Include="Facebook.Unity.Settings">
