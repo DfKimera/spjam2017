@@ -7,6 +7,7 @@ TagManager:
   - CanBeGrabbed
   - CanBeStunned
   - BlockSpawner
+  - UIEventSystem
   layers:
   - Default
   - TransparentFX

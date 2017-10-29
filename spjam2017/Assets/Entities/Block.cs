@@ -37,7 +37,7 @@ namespace Entities {
 
 		public float GetBlockMass() {
 			switch (type) {
-				case BlockType.Crawfish: return 50;
+				case BlockType.Crawfish: return 40;
 				case BlockType.Larvae: return 25;
 				case BlockType.Worm: return 10;
 			}

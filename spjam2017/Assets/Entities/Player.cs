@@ -116,8 +116,9 @@ namespace Entities {
 
 			animationName = "idle";
 
-			bool isAttacking = (attackCooldown > (attackDelay - 8));
+			bool isAttacking = (attackCooldown > (attackDelay - 15));
 
+			if (isAttacking) animationName = "attack_down";
 			if (body.velocity.x > animationDeadzone) animationName = ((isAttacking) ? "attack" : "walk") + "_right";
 			if (body.velocity.x < -animationDeadzone) animationName = ((isAttacking) ? "attack" : "walk") + "_left";
 			if (body.velocity.z < -animationDeadzone && body.velocity.z < body.velocity.x) animationName = ((isAttacking) ? "attack" : "walk") + "_down";

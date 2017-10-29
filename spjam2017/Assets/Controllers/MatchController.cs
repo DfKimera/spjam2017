@@ -2,6 +2,7 @@
 using Identifiers;
 using Structs;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Controllers {
 	public class MatchController : MonoBehaviour {
@@ -29,6 +30,7 @@ namespace Controllers {
 		private Dictionary<PlayerID, PlayerSettings> players = new Dictionary<PlayerID, PlayerSettings>();
 	
 		private RandomBlockSpawner spawner;
+		private EventSystem uiEvents;
 	
 	
 		protected void Start () {
@@ -38,6 +40,9 @@ namespace Controllers {
 			ResetPlayerPositions();
 
 			spawner = GameObject.FindGameObjectWithTag("BlockSpawner").GetComponent<RandomBlockSpawner>();
+			uiEvents = GameObject.FindWithTag("UIEventSystem").GetComponent<EventSystem>();
+			
+			ShowTitleScreen();
 		}
 	
 		protected void Update () {
@@ -138,6 +143,8 @@ namespace Controllers {
 			hasGameOver = false;
 			hasMatchStarted = false;
 			hasSelectedMatchType = false;
+			
+			uiEvents.SetSelectedGameObject(GameObject.Find("BtnTwoPlayers"));
 		}
 
 		public void Select2v2() {
