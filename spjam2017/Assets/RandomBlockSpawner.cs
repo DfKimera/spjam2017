@@ -45,13 +45,14 @@ public class RandomBlockSpawner : MonoBehaviour {
 
 		pos.x = Random.Range(minX, maxX);
 		pos.z = Random.Range(minY, maxY);
-		pos.y = 0;
+		pos.y = 0.12f;
 
 		return pos;
 	}
 
 	private void SpawnBlock(BlockID id, Vector3 position) {
 		GameObject obj = Instantiate<GameObject>(blockPrefab, position, Quaternion.identity);
+		obj.transform.parent = gameObject.transform;
 		obj.GetComponent<Block>().id = id;
 	}
 }
