@@ -10,12 +10,20 @@ namespace Entities {
 		private SphereCollider radius;
 		private Animator animator;
 		private MatchController match;
+		private ParticleSystem particles;
 
+		public GameObject targetPlayer = null;
 		public GameObject objectBeingDragged = null;
 		public FixedJoint dragJoint = null;
 	
 		public PlayerID id = PlayerID.Amber;
 		public TeamID team = TeamID.TeamA;
+
+		public int attackCooldown = 0;
+		public int stunCooldown = 0;
+		
+		public int attackDelay = 100;
+		public int stunDelay = 100;
 
 		public string animationName = "player_idle";
 
@@ -29,6 +37,7 @@ namespace Entities {
 	
 		protected void Start () {
 			body = GetComponent<Rigidbody>();
+			//particles = GetComponent<ParticleSystem>();
 			animator = GetComponentInChildren<Animator>();
 			match = GameObject.FindWithTag("GameController").GetComponent<MatchController>();
 		}
@@ -37,9 +46,17 @@ namespace Entities {
 			if (!IsActive()) return;
 		
 			CheckInputs();
+
+			if (tryingToAttack) {
+				Attack();
+			}
+			
+			HandleStun();
 			HandleMovement();
 			HandleGrabbing();
 			HandleAnimations();
+			
+			TickCooldowns();
 		}
 
 		private bool IsActive() {
@@ -67,6 +84,15 @@ namespace Entities {
 			tryingToHold = Input.GetButton(GetPlayerPrefix() + "_Hold");
 			tryingToAttack = Input.GetButtonDown(GetPlayerPrefix() + "_Attack");
 		
+		}
+
+		private void HandleStun() {
+			if (!isStunned) return;
+			
+			inputX = 0;
+			inputY = 0;
+			tryingToHold = false;
+			tryingToAttack = false;
 		}
 
 		private void HandleMovement() {
@@ -98,6 +124,39 @@ namespace Entities {
 			animator.Play(GetPlayerPrefix() + "_" + animationName);
 
 		}
+
+		private void TickCooldowns() {
+			if(attackCooldown > 0) attackCooldown--;
+			if(stunCooldown > 0) stunCooldown--;
+
+			if (stunCooldown == 0) isStunned = false;
+		}
+		
+		public void Attack() {
+
+			if (attackCooldown > 0) return;
+			
+			attackCooldown = attackDelay;
+			
+			if (!targetPlayer) {
+				// TODO: emit 'ugh' sound
+				return;
+			}
+
+			targetPlayer.GetComponent<Player>().Stun();
+			
+
+			//particles.Emit(100);
+		}
+
+		public void Stun() {
+			Debug.Log(GetPlayerPrefix() + " -> STUNNED!");
+			isStunned = true;
+			stunCooldown = stunDelay;
+			
+			// TODO: emit 'ouch' sound
+		}
+		
 	
 		private void GrabBlock(GameObject obj) {
 			dragJoint = gameObject.AddComponent<FixedJoint>() as FixedJoint;
@@ -122,8 +181,26 @@ namespace Entities {
 		
 		}
 
+		private void OnTriggerEnter(Collider other) {
+			if (!other.CompareTag("Player")) return;
+			//if (other.GetComponent<Player>().team == team) return; // Disable friendly fire
+			if (targetPlayer) return;
+
+			targetPlayer = other.gameObject;
+		}
+
+		private void OnTriggerExit(Collider other) {
+			if (!other.CompareTag("Player")) return;
+			if (!targetPlayer) return;
+
+			if (targetPlayer.Equals(other.gameObject)) {
+				targetPlayer = null;
+			}
+		}
+
 		private void OnTriggerStay(Collider other) {
 			if (!IsActive()) return;
+
 		
 			if (!other.CompareTag("CanBeGrabbed")) return;
 		

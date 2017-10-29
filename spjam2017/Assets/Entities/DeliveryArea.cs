@@ -66,6 +66,8 @@ namespace Entities {
 			BlockType destroyWithType = BlockType.Crawfish;
 		
 			objectsInArea.ForEach(o => {
+				if (o == null || !o.activeSelf) return;
+				
 				BlockType type = o.GetComponent<Block>().Type;
 			
 				if (!objectCounter.ContainsKey(type)) {
@@ -100,14 +102,15 @@ namespace Entities {
 			List<GameObject> objectsToDestroy = new List<GameObject>(); 
 		
 			objectsInArea.ForEach(o => {
+				if (o == null || !o.activeSelf) return;
 				if (!o.GetComponent<Block>().Type.Equals(type)) return;
 			
 				objectsToDestroy.Add(o);
 			});
 		
 			objectsToDestroy.ForEach(o => {
-				Destroy(o);
 				objectsInArea.Remove(o);
+				Destroy(o);
 			});
 		
 			objectsToDestroy.Clear();

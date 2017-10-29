@@ -20,10 +20,10 @@ namespace Controllers {
 
 		public int scoreToVictory = 20;
 		
-		public Vector3 player1StartingPos = new Vector3(-2.0f, 0.1f, 0.5f);
-		public Vector3 player2StartingPos = new Vector3(2.0f, 0.1f, 0.5f);
-		public Vector3 player3StartingPos = new Vector3(-2.0f, 0.1f, -1.5f);
-		public Vector3 player4StartingPos = new Vector3(2.0f, 0.1f, -1.5f);
+		public Vector3 player1StartingPos = new Vector3(-2.0f, 0.3f, 0.5f);
+		public Vector3 player2StartingPos = new Vector3(2.0f, 0.3f, 0.5f);
+		public Vector3 player3StartingPos = new Vector3(-2.0f, 0.3f, -1.5f);
+		public Vector3 player4StartingPos = new Vector3(2.0f, 0.3f, -1.5f);
 	
 		private Dictionary<TeamID, int> score = new Dictionary<TeamID, int>();
 		private Dictionary<PlayerID, PlayerSettings> players = new Dictionary<PlayerID, PlayerSettings>();
