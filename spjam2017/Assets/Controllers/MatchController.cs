@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Entities;
 using Identifiers;
 using Structs;
 using UnityEngine;
@@ -74,6 +75,11 @@ namespace Controllers {
 			player2.SetActive(players[PlayerID.Redmayne].isPlaying);
 			player3.SetActive(players[PlayerID.Pinkerton].isPlaying);
 			player4.SetActive(players[PlayerID.Dorange].isPlaying);
+			
+			player1.GetComponent<Player>().team = players[PlayerID.Amber].team;
+			player2.GetComponent<Player>().team = players[PlayerID.Redmayne].team;
+			player3.GetComponent<Player>().team = players[PlayerID.Pinkerton].team;
+			player4.GetComponent<Player>().team = players[PlayerID.Dorange].team;
 		}
 		
 		private void ResetPlayerPositions() {

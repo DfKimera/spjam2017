@@ -12,8 +12,8 @@ namespace UI {
 		public GameObject iconPrefab;
 		public DeliveryArea deliveryArea;
 
-		public int maxIcons = 3;
-		public int iconSize = 80;
+		public int maxIcons = 2;
+		public int iconSize = 20;
 		public List<GameObject> icons = new List<GameObject>();
 		public Dictionary<BlockType, int> count = new Dictionary<BlockType, int>();
 		
@@ -57,11 +57,11 @@ namespace UI {
 			}
 
 			for (int i = 0; i < count[BlockType.Larvae]; i++) {
-				SpawnIcon(GetXOffset(i), iconSize, BlockType.Larvae);
+				SpawnIcon((iconSize * 2) + GetXOffset(i), 0, BlockType.Larvae);
 			}
 
 			for (int i = 0; i < count[BlockType.Worm]; i++) {
-				SpawnIcon(GetXOffset(i), iconSize * 2, BlockType.Worm);
+				SpawnIcon((iconSize * 4) + GetXOffset(i), 0, BlockType.Worm);
 			}
 			
 		}
@@ -71,7 +71,7 @@ namespace UI {
 				return index * iconSize;
 			}
 
-			return (maxIcons * iconSize) - (index * iconSize);
+			return ((6 * iconSize) - (index * iconSize));
 		}
 
 		private void SpawnIcon(int x, int y, BlockType type) {

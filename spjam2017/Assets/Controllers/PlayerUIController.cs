@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Identifiers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,15 @@ namespace Controllers {
 		private Player player;
 		private GameObject stunnedLabel;
 		private GameObject attackCooldownMeter;
+		private GameObject teamALabel;
+		private GameObject teamBLabel;
 		
 		protected void Start () {
 			player = GetComponentInParent<Player>();
 			stunnedLabel = GetComponentInChildren<Text>().gameObject;
 			attackCooldownMeter = GetComponentInChildren<Scrollbar>().gameObject;
+			teamALabel = transform.Find("TeamALabel").gameObject;
+			teamBLabel = transform.Find("TeamBLabel").gameObject;
 		}
 	
 		protected void Update () {
@@ -20,6 +25,9 @@ namespace Controllers {
 			
 			stunnedLabel.SetActive(player.isStunned);
 			attackCooldownMeter.SetActive(isCoolingDown);
+			
+			teamALabel.SetActive(player.team == TeamID.TeamA);
+			teamBLabel.SetActive(player.team == TeamID.TeamB);
 
 			if (!isCoolingDown) return;
 
