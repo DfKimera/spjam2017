@@ -89,8 +89,8 @@ namespace Entities {
 
 		private void CheckInputs() {
 
-			inputX = Input.GetAxis(GetPlayerPrefix() + "_Move_Horizontal");
-			inputY = Input.GetAxis(GetPlayerPrefix() + "_Move_Vertical");
+			inputX = (Input.GetAxis(GetPlayerPrefix() + "_Move_Horizontal") + Input.GetAxis(GetPlayerPrefix() + "_Move_KBHorizontal")) / 2;
+			inputY = (Input.GetAxis(GetPlayerPrefix() + "_Move_Vertical") + Input.GetAxis(GetPlayerPrefix() + "_Move_KBVertical")) / 2;
 
 			tryingToHold = Input.GetButton(GetPlayerPrefix() + "_Hold");
 			tryingToAttack = Input.GetButtonDown(GetPlayerPrefix() + "_Attack");
@@ -107,7 +107,7 @@ namespace Entities {
 		}
 
 		private void HandleMovement() {
-			body.AddForce(new Vector3(inputX * speed, 0, -inputY * speed), ForceMode.Force);
+			body.AddForce(new Vector3(inputX * speed * Time.fixedDeltaTime * 100, 0, -inputY * speed * Time.fixedDeltaTime * 100), ForceMode.Force);
 		}
 
 		private void HandleGrabbing() {

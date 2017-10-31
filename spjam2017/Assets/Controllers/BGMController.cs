@@ -2,26 +2,20 @@
 
 namespace Controllers {
 	public class BGMController : MonoBehaviour {
-
-		public AudioSource track;
 	
 		public AudioClip bgmTitle;
 		public AudioClip bgmMatch;
 
-		protected void Start () {
-			track = GetComponent<AudioSource>();
-		}
-
 		public void PlayTitleSong() {
-			track.Stop();
-			track.clip = bgmTitle;
-			track.Play();
+			GetComponent<AudioSource>().Stop();
+			GetComponent<AudioSource>().clip = bgmTitle;
+			GetComponent<AudioSource>().Play();
 		}
 
 		public void PlayMatchSong() {
-			track.Stop();
-			track.clip = bgmMatch;
-			track.Play();
+			GetComponent<AudioSource>().Stop();
+			GetComponent<AudioSource>().clip = bgmMatch;
+			GetComponent<AudioSource>().Play();
 		}
 	
 	}

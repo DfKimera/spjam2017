@@ -47,7 +47,7 @@ namespace Controllers {
 
 			uiController = GameObject.Find("UI").GetComponent<UIController>();
 			spawner = GameObject.FindGameObjectWithTag("BlockSpawner").GetComponent<RandomBlockSpawner>();
-			uiEvents = GameObject.FindWithTag("UIEventSystem").GetComponent<EventSystem>();
+			//uiEvents = GameObject.FindWithTag("UIEventSystem").GetComponent<EventSystem>();
 			bgm = GameObject.Find("BackgroundMusic").GetComponent<BGMController>();
 			
 			ShowTitleScreen();
@@ -160,8 +160,6 @@ namespace Controllers {
 			showCredits = false;
 			
 			bgm.PlayTitleSong();
-
-			uiController.ResetTitleScreenButtons();
 		}
 
 		public void ShowCredits() {

@@ -18,7 +18,7 @@ namespace Controllers {
 	
 		protected void Start () {
 			match = GameObject.FindWithTag("GameController").GetComponent<MatchController>(); 		
-			uiEvents = GameObject.FindWithTag("UIEventSystem").GetComponent<EventSystem>(); 		
+			//uiEvents = GameObject.FindWithTag("UIEventSystem").GetComponent<EventSystem>(); 		
 		}
 	
 		protected void Update () {
@@ -33,25 +33,12 @@ namespace Controllers {
 			//AudioSource.PlayClipAtPoint(sfxMenuSelect, Camera.main.transform.position);
 		}
 
-		public void ResetTitleScreenButtons() {
-			GameObject.Find("MatchTypePanel").GetComponent<TitleScreenController>().hasPreselectedButton = false;
-		}
-
 		private void CheckPanelVisibility() {
 			gameHUD.SetActive(match.hasMatchStarted || match.hasGameOver);
-			matchTypePanel.SetActive(!match.hasMatchStarted && !match.hasGameOver && !match.hasSelectedMatchType);
-			lobbyPanel.SetActive(!match.hasMatchStarted && !match.hasGameOver && match.hasSelectedMatchType);
+			matchTypePanel.SetActive(!match.hasMatchStarted && !match.hasGameOver && !match.showCredits && !match.hasSelectedMatchType);
+			lobbyPanel.SetActive(!match.hasMatchStarted && !match.hasGameOver && !match.showCredits && match.hasSelectedMatchType);
 			gameOverPanel.SetActive(match.hasGameOver);
 			creditsPanel.SetActive(match.showCredits);
-
-			if (match.showCredits) {
-				GameObject btn = GameObject.Find("BtnBackToTitle");
-
-				if (btn == null) return;
-				
-				uiEvents.SetSelectedGameObject(btn);
-			}
-
 		}
 	}
 }
